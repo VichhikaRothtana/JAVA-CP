@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="/user/default">
+
+<head>
+<meta charset="ISO-8859-1">
+</head>
+
+<body>
+
+	<div layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0" th:text="'Cheatsheet ' + ${testName}"></h1>
+					</div>
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="card"> 
+					<div class="modal-body">
+						<div th:each="question : ${listQuestion}">
+
+							<div class="form-group">
+								<h3 style="color: white; background-color: black;"
+									th:text="${question.question_title}"></h3>
+
+
+								<div th:switch="${question.image}">
+									<span th:case="null"> </span> <span th:case="*">
+										<div style="display: flex;">
+											<div
+												style="margin: 30px 0px; flex-shrink: 0; flex: 0 0 10em;">
+												<img style="width: 100%;"
+													th:src="@{${question.ImageQuestionPath}}" alt="">
+											</div>
+										</div>
+
+									</span>
+								</div>
+
+
+
+								<div class="text-bold" style="margin-bottom: 15px"
+									th:text="'points: ' + ${question.point}"></div>
+								<div th:switch="${question.isSingleChoice}">
+									<div th:case="false"> 
+									
+										<h5 class="text-bold" style="color: blue">Your Answer:</h5>
+										<div th:each="i : ${history}">
+											<div
+												th:if="(${question.id} == ${i.question.id})  and (${i.player.id} == ${playerID}) ">
+												<!-- <p th:text="${i.choice}"></p> --> 
+												<div > <i style="margin:3px 10px; color:blue;"  class="fas fa-chevron-right"></i> <span th:text="${i.AnswerChoice.choice}"> </span> </div>
+												 
+											</div> 
+											
+										</div>
+										 
+										<h5 class="text-bold" style="margin-top:20px; color: green">Correct Answer:</h5>
+										<div th:each="i : ${listAnswer}">
+											<div
+												th:if="(${question.id} == ${i.question.id}) and (${i.isCorrect} == ${true})  "> 
+												<div > <i style="margin:3px 10px; color:green;"  class="fas fa-chevron-right"></i> <span th:text="${i.choice}"> </span> </div>
+												 
+											</div>
+										</div>
+
+									</div>
+									<div th:case="true">
+									
+									<h5 class="text-bold" style="color: blue">Your Answer:</h5> 
+										<div th:each="i : ${history}"> 
+											<div
+												th:if="(${question.id} == ${i.question.id}) and (${i.player.id} == ${playerID}) ">
+												<!-- <p th:text="${i.choice}"></p> -->
+												<div > <i style="margin:3px 10px; color:blue;"  class="fas fa-chevron-right"></i> <span th:text="${i.AnswerChoice.choice}"> </span> </div>
+												 
+											</div> 
+											
+										</div>
+										 
+										<h5  class="text-bold" style="margin-top:20px; color: green">Correct Answer:</h5>
+										<div th:each="i : ${listAnswer}">
+											<div
+												th:if="(${question.id} == ${i.question.id}) and (${i.isCorrect} == ${true}) ">
+												<div > <i style="margin:3px 10px; color:green;"  class="fas fa-chevron-right"></i> <span th:text="${i.choice}"> </span> </div>
+												
+												
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+					<a href="/all/test" style="margin:10px 800px 30px 800px;" class="btn btn-secondary">Go Back</a>
+				</div>
+				<!-- /.card -->
+			</div>
+			<!--/. container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<div layout:fragment="script">
+
+		<!-- DataTables  & Plugins -->
+		<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+		<script
+			src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+		<script
+			src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+		<script src="/plugins/jszip/jszip.min.js"></script>
+		<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+		<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+		<script>
+			$(function() {
+				$("#example1").DataTable({
+					"responsive" : true,
+					"lengthChange" : false,
+					"autoWidth" : false,
+					"buttons" : [ "colvis" ]
+				}).buttons().container().appendTo(
+						'#example1_wrapper .col-md-6:eq(0)');
+			});
+		</script>
+
+		<script>
+			$(document).ready(function() {
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		</script>
+
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!-- Navbar -->
+  <nav class="main-header navbar navbar-expand-md navbar-light navbar-success">
+    <div class="container-fluid">
+      <a href="/" class="navbar-brand" style="margin-right:40px;"> 
+        <img src="/dist/img/font.jpg" alt="AdminLTE Logo" class="brand-image elevation-3"
+              >
+        <span class="brand-text font-weight-light">testio</span>
+      </a>
+      
+      <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a href="/" class="nav-link">Home</a>
+          </li> 
+          <li class="nav-item">
+            <a href="/all/test" class="nav-link">All Test</a>
+          </li> 
+          <li class="nav-item">
+            <a href="/taken/test" class="nav-link">Taken Test</a>
+          </li> 
+          <li class="nav-item">
+            <a href="/taken/test" class="nav-link">Untaken Test</a>
+          </li> 
+        </ul>
+
+      
+      </div>
+
+      <!-- Right navbar links -->
+      <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+    
+
+    <li class="nav-item">
+      <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+        <i class="fas fa-expand-arrows-alt"></i>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="dark-mode-toggle">
+        <i class="fas fa-adjust"></i>
+      </a>
+    </li>
+    <li sec:authorize="isAuthenticated()" class="nav-item">
+      <a th:href="@{/logout}" class="nav-link" id="dark-mode-toggle">
+        LOGOUT
+      </a>
+    </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- /.navbar -->
+
+
+
+
+
+
+
+
+
+
+
+
+

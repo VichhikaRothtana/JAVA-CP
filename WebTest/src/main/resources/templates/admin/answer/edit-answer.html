@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="/admin/default">
+
+<head>
+<meta charset="ISO-8859-1">
+<link rel="stylesheet"
+	href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<link rel="stylesheet"
+	href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0">
+							<span th:text="${testID}"></span>
+						</h1>
+					</div>
+					<!-- /.col -->
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="/">Home</a></li>
+							<li class="breadcrumb-item active">Add Test</li>
+						</ol>
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="card card-dark">
+					<div class="card-header">
+						<h3 class="card-title">Form</h3>
+					</div>
+					<!-- /.card-header -->
+					<!-- form start -->
+					<form action="#" th:action="@{/question/edit/store}"
+						th:object="${question}" method="POST"
+						enctype="multipart/form-data">
+
+						<div th:text="@{${question.ImageQuestionPath}}"></div>
+						<div class="card-body">
+							<div style="display:none;" class="form-group">
+								<label>ID</label> <input id="id" name="id" type="text" th:field="*{id}"
+									class="form-control" placeholder="Enter id">
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputEmail1">Question Title</label> <input
+									type="text" id="question_title" name="question_title" th:field="*{question_title}" class="form-control"
+									placeholder="Enter question" required>
+							</div>
+
+
+
+							<div class="form-group">
+								<label for="fileImage">Image input</label>
+								<div class="input-group">
+									<div class="custom-file">
+										<input  type="file"
+											class="custom-file-input" id="fileImage" name="fileImage"
+											accept="image/png, image/jpg, image/jpeg"> <label
+											class="custom-file-label" for="fileImage">Choose
+											Image</label>
+									</div>
+								</div>
+							</div>
+
+							<div th:switch="${question.ImageQuestionPath}">
+								<span th:case="null">
+								<div id="displayThumbnail" style="display:none;">
+								<img alt="Image Preview"  id = "thumbnail"> 
+							</div>
+								</span>
+								
+								 <span th:case="*"><img
+									alt="Image Preview" th:src="@{${question.ImageQuestionPath}}"
+									id="thumbnail"> </span>
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputEmail1">Points</label> <input
+									type="number" id="point" name="point" th:field="*{point}" class="form-control" value=""
+									placeholder="How many the point for that question?" min="1"
+									max="5" required>
+							</div>
+
+
+
+							<div th:switch="${question.isSingleChoice}">
+								<div th:case="false">
+									<div class="form-group">
+										<label class="radio-inline"> <input type="radio"
+											name="is_single" id="optionsRadiosInline1" value="1" />
+											Single Choice
+										</label> <br /> <label class="radio-inline"> <input
+											type="radio" name="is_single" id="optionsRadiosInline2"
+											value="0" checked="checked" /> Multiple Choice
+										</label>
+									</div>
+								</div>
+
+								<div th:case="true">
+									<div class="form-group">
+										<label class="radio-inline"> <input type="radio"
+											name="is_single" id="optionsRadiosInline1" value="1"
+											checked="checked" /> Single Choice
+										</label> <br /> <label class="radio-inline"> <input
+											type="radio" name="is_single" id="optionsRadiosInline2"
+											value="0" /> Multiple Choice
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+						<!-- /.card-body -->
+
+						<div class="card-footer">
+							<button type="submit" class="btn btn-dark">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!--/. container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<div layout:fragment="script">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#fileImage').change(function() {
+					$('#displayThumbnail').css("display", "block");
+					showImageThumbnail(this);
+				});
+			});
+
+			function showImageThumbnail(fileInput) {
+				file = fileInput.files[0];
+				reader = new FileReader();
+
+				reader.onload = function(e) {
+					console.log(e);
+
+					console.log(e.target);
+					$('#thumbnail').attr('src', e.target.result);
+				};
+
+				reader.readAsDataURL(file);
+			}
+
+			$('#fileImage').on('change', function(e) {
+				//get the file name
+				var fileName = e.target.files[0].name;
+				//replace the "Choose a file" label
+				$(this).next('.custom-file-label').html(fileName);
+			})
+		</script>
+
+	</div>
+
+</body>
+
+</html>

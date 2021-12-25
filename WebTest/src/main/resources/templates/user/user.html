@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="/user/default">
+
+<head>
+<meta charset="ISO-8859-1">
+</head>
+<body>
+
+	<div layout:fragment="content">
+
+
+		<!-- Main content -->
+		<section class="content" style="padding-top: 10px;">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-3">
+
+						<!-- Profile Image -->
+						<div class="card card-success card-outline">
+							<div class="card-body box-profile">
+								<div class="text-center">
+									<img class="profile-user-img img-fluid img-circle"
+										src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Google_Contacts_icon.svg/1024px-Google_Contacts_icon.svg.png"
+										alt="User profile picture">
+								</div>
+
+								<h3 class="profile-username text-center">[[${#request.userPrincipal.principal.fullName}]]</h3>
+
+
+								<p class="text-muted text-center">User</p>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+
+					</div>
+					<!-- /.col -->
+					<div class="col-md-9">
+						<div class="card bg-gradient-dark">
+							<div class="card-header">
+								<h3 class="card-title">Points You've Earned</h3>
+							</div>
+							<div class="card-body">
+
+								<p class="profile-username text-center">
+									<i style="font-size: 50px; color: #FFD700;"
+										class="fas fa-coins"></i>
+								</p>
+
+								<p class="profile-username text-center" th:text="${score}"
+									style="font-size: 30px;"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Info boxes -->
+				<div class="row">
+					<div class="col-lg-4 col-4" >
+						<!-- small box -->
+						<div class="small-box bg-info">
+							<div class="inner">
+								<h3 th:text="${all_test}"></h3>
+
+								<p>All Tests</p>
+							</div>
+							<div class="icon">
+								<i class="fas fa-clipboard-list"></i>
+							</div>
+							<a href="/all/test" class="small-box-footer">More info <i
+								class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div class="clearfix hidden-md-up"></div>
+					<div class="col-lg-4 col-4">
+						<!-- small box -->
+						<div class="small-box bg-warning">
+							<div class="inner">
+								<h3 th:text="${taken_test}"></h3>
+
+								<p>Taken Tests</p>
+							</div>
+							<div class="icon">
+								<i class="fas fa-check-circle"></i>
+							</div>
+							<a href="/taken/test" class="small-box-footer">More info <i
+								class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<!-- ./col -->
+					<div class="clearfix hidden-md-up"></div>
+					<div class="col-lg-4 col-4">
+						<!-- small box -->
+						<div class="small-box bg-danger">
+							<div class="inner">
+								<h3 th:text="${untaken_test}"></h3>
+
+								<p>Untaken Tests</p>
+							</div>
+							<div class="icon">
+								<i class="fas fa-exclamation-triangle"></i>
+							</div>
+							<a href="/untaken/test" class="small-box-footer">More info <i
+								class="fas fa-arrow-circle-right"></i></a>
+						</div>
+					</div>
+					<!-- ./col -->
+				</div>
+
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-12 col-sm-6 col-md-4">
+
+						<!-- PIE CHART -->
+						<div class="card card-dark">
+							<div class="card-header">
+								<h3 class="card-title">Your Test Progress</h3>
+
+
+							</div>
+							<div class="card-body">
+								<canvas id="pieChart"
+									style="min-height: 350px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+
+					</div>
+					<!-- fix for small devices only -->
+					<div class="clearfix hidden-md-up"></div>
+					<!-- /.col   -->
+					<div class="col-12 col-sm-6 col-md-8">
+						<div class="card border-dark">
+							<div class="card-header">
+								<h3 class="card-title">Rank</h3>
+							</div>
+							<!-- /.card-header -->
+							<div class="card-body table-responsive p-0"
+								style="height: 390px;">
+								 
+								<table class="table table-head-fixed text-nowrap">
+									<thead>
+										<tr>
+											<th>No</th>
+											<th>User</th>
+											<th>Points</th>
+										</tr>
+									</thead>
+									<tbody>
+
+
+
+										<tr th:each="player : ${listPlayers}">
+
+											<td th:text="${playerStat.count}"></td>
+											<td
+												th:text="${player.user.firstName} + ' ' +${player.user.lastName}"></td>
+											<td th:text="${player.score}"></td>
+
+
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- /.card-body -->
+						</div>
+						<!-- /.card -->
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+
+				<!-- /.col -->
+			</div>
+
+		</section>
+		<!-- /.content -->
+
+	</div>
+	<div layout:fragment="script">
+
+		<!-- jQuery -->
+		<script src="../../plugins/jquery/jquery.min.js"></script>
+		<!-- Bootstrap 4 -->
+		<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<!-- ChartJS -->
+		<script src="../../plugins/chart.js/Chart.min.js"></script>
+		<!-- AdminLTE App -->
+		<script src="../../dist/js/adminlte.min.js"></script>
+		<!-- AdminLTE for demo purposes -->
+		<script src="../../dist/js/demo.js"></script>
+		<!-- Page specific script -->
+		<script type="text/javascript">
+			var all_test = "[[${all_test}]]";
+			var taken_test = "[[${taken_test}]]";
+			var untaken_test = "[[${untaken_test}]]";
+			$(function() {
+				//-------------
+				//- DONUT CHART -
+				//-------------
+				// Get context with jQuery - using jQuery's .get() method.
+
+				var donutData = {
+					labels : [ 'All Tests', 'Taken Tests', 'Untaken Tests', ],
+					datasets : [ {
+						data : [ all_test, taken_test, untaken_test ],
+						backgroundColor : [ '#17a2b8', '#ffc107', '#dc3545' ],
+					} ]
+				}
+				//-------------
+				//- PIE CHART -
+				//-------------
+				// Get context with jQuery - using jQuery's .get() method.
+				var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+				var pieData = donutData;
+				var pieOptions = {
+					maintainAspectRatio : false,
+					responsive : true,
+				}
+				//Create pie or douhnut chart
+				// You can switch between pie and douhnut using the method below.
+				new Chart(pieChartCanvas, {
+					type : 'pie',
+					data : pieData,
+					options : pieOptions
+				})
+
+			})
+		</script>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="/user/default">
+
+<head>
+<meta charset="ISO-8859-1">
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1 class="m-0">All Tests</h1>
+					</div>
+				</div>
+				<!-- /.row -->
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
+
+		<!-- Main content -->
+		<section class="content">
+			<div class="container-fluid">
+				<div class="card">
+					<!-- /.card-header -->
+					<div class="card-body">
+						<table id="example1" class="table table-bordered table-striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Test</th>
+									<th>Points</th>
+									<th>Your earned points</th>
+									<th>Tries</th>
+									<th style="width: 5%;">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="test : ${listAllTests}">
+									<td th:text="${test.id}"></td>
+									<td th:text="${test.name}"></td>
+									<td th:text="${test.totalPoints}"></td>
+
+									<span
+										th:switch="${@historyRepository.getPlayerEarnedPointsForTest(test.id, userID)}">
+										<td th:case="null">0</td>
+										<td th:case="*"><span
+											th:text="${@historyRepository.getPlayerEarnedPointsForTest(test.id, userID)}"></span></td>
+									</span>
+
+
+									<span
+										th:switch="${@playerRepository.checkIfUserPlayTest(test.id, userID)}">
+										<span th:case="null"><td> 0/1</td>
+										<td class="text-center"><span data-toggle="tooltip"
+										data-placement="left" title="View">
+										
+										 
+										
+										 <a
+										 data-toggle="modal"
+											th:data-target="@{#exampleModalitem{id}(id=${test.id})}"
+											
+											class="btn btn-warning"><i class="fas fa-play"></i></a>
+									</span>
+									
+									<div class="text-left modal fade"
+											th:id="@{exampleModalitem{id}(id=${test.id})}"
+											tabindex="-1" role="dialog" aria-labelledby="exampleModal"
+											aria-hidden="true">
+											<div class="modal-dialog modal-dialog-centered"
+												role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h3 class="modal-title" id="exampleModal">Start [[${test.name}]] Test
+												 </h3>
+													</div>
+													<div class="modal-body">
+														Are you sure you ready to take the test?<br /> 
+														<span class="text-bold">You only get one try.</span>
+													</div>
+													<div class="modal-footer">
+														<a class="btn btn-secondary" data-dismiss="modal">No</a> <a
+															th:href="@{/test/play/{id}(id=${test.id})}"
+															class="btn btn-success">Yes</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									
+									
+									
+									
+									
+									
+									
+									</td></span>
+										
+										<td th:case="*"><span> 1/1</span></td>
+									</span>
+
+
+									
+									
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- /.card-body -->
+				</div>
+				<!-- /.card -->
+			</div>
+			<!--/. container-fluid -->
+		</section>
+		<!-- /.content -->
+	</div>
+	<div layout:fragment="script">
+		<!-- DataTables  & Plugins -->
+		<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+		<script
+			src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+		<script
+			src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+		<script src="/plugins/jszip/jszip.min.js"></script>
+		<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+		<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+		<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+		<script>
+			$(function() {
+				$("#example1").DataTable({
+					"responsive" : true,
+					"lengthChange" : false,
+					"autoWidth" : false,
+					"buttons" : [ "colvis" ]
+				}).buttons().container().appendTo(
+						'#example1_wrapper .col-md-6:eq(0)');
+			});
+		</script>
+
+		<script>
+			$(document).ready(function() {
+				$('[data-toggle="tooltip"]').tooltip();
+			});
+		</script>
+
+	</div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

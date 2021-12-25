@@ -1,0 +1,99 @@
+<!-- REQUIRED SCRIPTS -->
+<!-- jQuery -->
+<script src="/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- overlayScrollbars -->
+<script src="/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.js"></script>
+
+<!-- PAGE PLUGINS -->
+<!-- jQuery Mapael -->
+<script src="/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="/plugins/raphael/raphael.min.js"></script>
+<script src="/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+<!-- ChartJS -->
+<script src="/plugins/chart.js/Chart.min.js"></script>
+
+<!-- AdminLTE for demo purposes -->
+<script src="/dist/js/demo.js"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="/dist/js/pages/dashboard2.js"></script>
+
+
+<script type="text/javascript">
+  //check for saved 'darkMode' in localStorage 
+  let darkMode = localStorage.getItem('darkMode');
+  const darkModeToggle = document.querySelector('#dark-mode-toggle');
+
+  const enableDarkMode = () => {
+    // 1. Add the class to the body
+    $(document).ready(function () {
+      $(".layout-fixed .main-sidebar").removeClass("sidebar-light-warning");
+      $(".layout-fixed .main-sidebar").addClass("sidebar-dark-warning");
+
+    });
+
+    document.body.classList.add('dark-mode');
+    // 2. Update darkMode in localStorage
+    localStorage.setItem('darkMode', 'enabled');
+  }
+
+  const disableDarkMode = () => {
+    $(document).ready(function () {
+      $(".layout-fixed .main-sidebar").removeClass("sidebar-dark-warning");
+      $(".layout-fixed .main-sidebar").addClass("sidebar-light-warning");
+    });
+    // 1. Remove the class from the body
+
+    document.body.classList.remove('dark-mode');
+    // 2. Update darkMode in localStorage 
+    localStorage.setItem('darkMode', null);
+  }
+
+  // If the user already visited and enabled darkMode
+  // start things off with it on
+  if (darkMode === 'enabled') {
+    enableDarkMode();
+  }
+
+  // When someone clicks the button
+  darkModeToggle.addEventListener('click', () => {
+    // get their darkMode setting
+    darkMode = localStorage.getItem('darkMode');
+
+    // if it not current enabled, enable it
+    if (darkMode !== 'enabled') {
+      enableDarkMode();
+      // if it has been enabled, turn it off  
+    } else {
+      disableDarkMode();
+    }
+  });
+</script>
+<!-- Toastr -->
+<script src="/plugins/toastr/toastr.min.js"></script>
+<!-- SweetAlert2 -->
+<script src="/plugins/sweetalert2/sweetalert2.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/dist/js/adminlte.min.js"></script>
+
+<script type="text/javascript">
+$(function () {
+    var url = window.location;
+    // for single sidebar menu
+    $('ul.nav-sidebar a').filter(function () {
+        return this.href == url;
+    }).addClass('active');
+
+    // for sidebar menu and treeview
+    $('ul.nav-treeview a').filter(function () {
+        return this.href == url;
+    }).parentsUntil(".nav-sidebar > .nav-treeview")
+        .css({'display': 'block'})
+        .addClass('menu-open').prev('a')
+        .addClass('active');
+});
+</script>

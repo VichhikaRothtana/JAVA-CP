@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="/admin/default">
+
+<head>
+  <meta charset="ISO-8859-1">
+</head>
+<body>
+
+  <div layout:fragment="content">
+	      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0">Setting</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Setting</li>
+              </ol>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+	
+	 <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+       <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- jquery validation -->
+            <div class="card card-dark">
+              <div class="card-header">
+                <h3 class="card-title">Update Profile</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form action="#" th:action="@{/setting/store}"
+						th:object="${user}" method="POST"
+						enctype="multipart/form-data">
+                <div class="card-body">
+                <div style="display:none;" class="form-group">
+								<label>ID</label> <input id="id" name="id" type="text" th:field="*{id}"
+									class="form-control" placeholder="Enter id">
+							</div>
+                
+                  <div class="form-group">
+                    <label for="">First name</label>
+                    <input required="required" type="text"  name="firstname" class="form-control" th:field="*{firstName}"   placeholder="First name">
+                  </div>
+                  <div class="form-group">
+                    <label for="">Last name</label>
+                    <input required="required"  type="text"  name="lastname" class="form-control"  th:field="*{lastName}"  placeholder="Last name">
+                  </div> 
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-dark">Update</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+            </div>
+          <!--/.col (left) -->
+          <!-- right column -->
+          <div class="col-md-6">
+
+          </div>
+          <!--/.col (right) -->
+        </div>
+        </div>
+        <!--/. container-fluid -->
+      </section>
+      <!-- /.content -->
+  </div>
+  <div layout:fragment="script"> 
+  </div>
+
+</body>
+
+</html>

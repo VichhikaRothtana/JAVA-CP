@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+  <meta charset="ISO-8859-1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Admin Dashboard</title>
+  <style th:replace="/admin/layout/style"></style>
+</head>
+
+<body class="sidebar-mini layout-fixed sidebar-collapse">
+  <div class="wrapper">
+
+    <div th:replace="/admin/layout/navbar"></div>
+    <div th:replace="/admin/layout/sidebar"></div>
+
+    <div class="content-wrapper">
+      <div layout:fragment="content">
+      </div>
+    </div>
+
+    <div th:replace="/admin/layout/footer"></div>
+    <div th:replace="/admin/layout/script"></div>
+
+    <!-- Page specific script -->
+    <div layout:fragment="script"></div>
+  </div>
+</body>
+
+</html>
